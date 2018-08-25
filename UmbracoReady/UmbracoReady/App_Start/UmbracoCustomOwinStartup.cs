@@ -1,10 +1,12 @@
 using Microsoft.Owin;
+using Microsoft.Owin.Security.OpenIdConnect;
 using Owin;
+using System.Threading.Tasks;
 using Umbraco.Core;
 using Umbraco.Core.Security;
 using Umbraco.Web.Security.Identity;
-using Umbraco.IdentityExtensions;
 using UmbracoReady;
+using UmbracoReady.App_Start;
 
 //To use this startup class, change the appSetting value in the web.config called 
 // "owin:appStartup" to be "UmbracoCustomOwinStartup"
@@ -82,6 +84,59 @@ namespace UmbracoReady
              *                  }
              *              });
              */
+
+
+            // Following code is for allowing the backoffice users to login using ReadyConnect (OpenIdConnect with sign-on using mobile app).
+
+            var identityOptions 
+                = new OpenIdConnectAuthenticationOptions
+                    {
+                        ClientId                    = "UmbracoReadyDemo",
+                        Caption                     = "Umbraco Ready",
+                        ResponseType                = "code id_token token",
+                        Scope                       = "openid profile application.profile rso_rid",   // When rso_rid is absent, rso_idp is used.
+                        ClientSecret                = "kz84Rt2OerYRKW4yjPnf",
+                        SignInAsAuthenticationType  = Constants.Security.BackOfficeExternalAuthenticationType,
+                        Authority                   = "https://members.readysignon.com/",
+                        RedirectUri                 = "http://localhost:5198/Umbraco",
+                        PostLogoutRedirectUri       = "http://localhost:5198/Umbraco",
+                    };
+
+            // Configure BackOffice Account Link button and style
+            identityOptions.ForUmbracoBackOffice("btn-openid", "fa-openid");    // More are avail at: https://fontawesome.com/
+            identityOptions.Caption = "ReadyConnect";                           // Or any other name you like.
+
+            // Give this middleware a unique type name
+            identityOptions.AuthenticationType = "https://members.readysignon.com/";    
+
+            // Configure AutoLinking, which allows Umbraco to automatically add a first-time
+            // visitor to its backoffice database without prompting the user.
+            identityOptions.SetExternalSignInAutoLinkOptions
+                (
+                    new ExternalSignInAutoLinkOptions(  autoLinkExternalAccount:    true, 
+                                                        defaultUserGroups:          null, 
+                                                        defaultCulture:             null)
+                );
+
+            // Here we customize two event handlers, one for transforming the claims recevied and another for 
+            // making sure the IdP Url is set (as the authority uri) in the OpenIdConnect request so it becomes
+            // easily accessible to the rest of the processing pipeline. The ReadySignOn mobile app uses the 
+            // IdP Url to search for maching record(s) in its secure vault upong receving an authentication request.
+            
+            identityOptions.Notifications 
+                = new OpenIdConnectAuthenticationNotifications
+                    {
+                        SecurityTokenValidated = ClaimsTransformer.GenerateUserIdentityAsync,       // See code of ClaimsTransformer class for details. 
+
+                        RedirectToIdentityProvider = ctx =>
+                        {
+                            ctx.ProtocolMessage.IdentityProvider = identityOptions.Authority;       // The IdP will decide its own best url if this is not set here.
+                            return Task.FromResult(0);
+                        }
+                    };
+
+            app.UseOpenIdConnectAuthentication(identityOptions);    // Don't forget this line and updating the web.config with <add key="owin:appStartup" value="UmbracoCustomOwinStartup" />
         }
+
     }
 }
