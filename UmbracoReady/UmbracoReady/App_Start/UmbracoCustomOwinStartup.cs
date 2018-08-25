@@ -93,10 +93,9 @@ namespace UmbracoReady
                     {
                         ClientId                    = "UmbracoReadyDemo",
                         Caption                     = "Umbraco Ready",
-                        ResponseType                = "code id_token token",
+                        ResponseType                = "code id_token token",    // This corresponds to the Hybrid Flow outlined in oidc core spec 1.0.
                         Scope                       = "openid profile application.profile rso_rid",   // When rso_rid is absent, rso_idp is used.
-                        ClientSecret                = "kz84Rt2OerYRKW4yjPnf",
-                        SignInAsAuthenticationType  = Constants.Security.BackOfficeExternalAuthenticationType,
+                        SignInAsAuthenticationType = Constants.Security.BackOfficeExternalAuthenticationType,
                         Authority                   = "https://members.readysignon.com/",
                         RedirectUri                 = "http://localhost:5198/Umbraco",
                         PostLogoutRedirectUri       = "http://localhost:5198/Umbraco",
