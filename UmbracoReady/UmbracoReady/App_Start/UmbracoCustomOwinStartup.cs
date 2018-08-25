@@ -91,13 +91,13 @@ namespace UmbracoReady
             var identityOptions 
                 = new OpenIdConnectAuthenticationOptions
                     {
-                        ClientId                    = "UmbracoReadyDemo",
+                        ClientId                    = "UmbracoReadyDemo",       // This client has already been registered. You may register more via https://members.readysignon.com
                         Caption                     = "Umbraco Ready",
                         ResponseType                = "code id_token token",    // This corresponds to the Hybrid Flow outlined in oidc core spec 1.0.
                         Scope                       = "openid profile application.profile rso_rid",   // When rso_rid is absent, rso_idp is used.
-                        SignInAsAuthenticationType = Constants.Security.BackOfficeExternalAuthenticationType,
+                        SignInAsAuthenticationType  = Constants.Security.BackOfficeExternalAuthenticationType,
                         Authority                   = "https://members.readysignon.com/",
-                        RedirectUri                 = "http://localhost:5198/Umbraco",
+                        RedirectUri                 = "http://localhost:5198/Umbraco",      // This cannot be change unless you use a different client registration created at https://members.readysignon.com
                         PostLogoutRedirectUri       = "http://localhost:5198/Umbraco",
                     };
 
@@ -127,9 +127,9 @@ namespace UmbracoReady
                     {
                         SecurityTokenValidated = ClaimsTransformer.GenerateUserIdentityAsync,       // See code of ClaimsTransformer class for details. 
 
-                        RedirectToIdentityProvider = ctx =>
+                        RedirectToIdentityProvider = n =>
                         {
-                            ctx.ProtocolMessage.IdentityProvider = identityOptions.Authority;       // The IdP will decide its own best url if this is not set here.
+                            n.ProtocolMessage.IdentityProvider = identityOptions.Authority;       // The IdP will decide its own best url if this is not set here.
                             return Task.FromResult(0);
                         }
                     };
