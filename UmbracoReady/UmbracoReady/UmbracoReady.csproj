@@ -303,6 +303,9 @@
     <Reference Include="UmbracoExamine, Version=0.7.0.26195, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\UmbracoCms.Core.7.12.1\lib\net45\UmbracoExamine.dll</HintPath>
     </Reference>
+    <Reference Include="UmbracoIdentity, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UmbracoIdentity.Core.6.0.0\lib\net45\UmbracoIdentity.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
@@ -334,6 +337,8 @@
     <Content Include="config\Lang\zh-CN.user.xml" />
     <Content Include="default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\foundation.form.validation.js" />
+    <Content Include="Scripts\jquery.validate.hooks.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -342,7 +347,19 @@
     <Compile Include="App_Start\ClaimsTransformer.cs" />
     <Compile Include="App_Start\UmbracoAuthTokenServerExtensions.cs" />
     <Compile Include="App_Start\UmbracoCustomOwinStartup.cs" />
+    <Compile Include="App_Start\UmbracoIdentityStartup.cs" />
     <Compile Include="App_Start\UmbracoStandardOwinStartup.cs" />
+    <Compile Include="Controllers\UmbracoIdentityAccountController.cs" />
+    <Compile Include="Models\UmbracoIdentity\ExternalLoginConfirmationViewModel.cs" />
+    <Compile Include="Models\UmbracoIdentity\ExternalLoginListViewModel.cs" />
+    <Compile Include="Models\UmbracoIdentity\ForgotPasswordViewModel.cs" />
+    <Compile Include="Models\UmbracoIdentity\LoginViewModel.cs" />
+    <Compile Include="Models\UmbracoIdentity\RegisterViewModel.cs" />
+    <Compile Include="Models\UmbracoIdentity\ResetPasswordViewModel.cs" />
+    <Compile Include="Models\UmbracoIdentity\RoleManagementModel.cs" />
+    <Compile Include="Models\UmbracoIdentity\UmbracoApplicationMember.cs" />
+    <Compile Include="Models\UmbracoIdentity\UmbracoApplicationRole.cs" />
+    <Compile Include="Models\UmbracoIdentity\UserPasswordModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -381,6 +398,24 @@
     <Content Include="Views\Partials\Grid\Bootstrap3-Fluid.cshtml" />
     <Content Include="Views\Partials\Grid\Bootstrap2.cshtml" />
     <Content Include="Views\Partials\Grid\Bootstrap2-Fluid.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\_ViewStart.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\ShowRoles.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\ResetPassword.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\RemoveAccountList.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\Register.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\Profile.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\ManagePassword.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\Manage.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\LoginStatus.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\Login.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\ForgotPassword.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\ExternalLoginsList.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\AccountLayout.cshtml" />
+    <Content Include="Views\Account.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
