@@ -149,7 +149,7 @@ namespace UmbracoReady
                 = new OpenIdConnectAuthenticationOptions
                 {
                     ClientId = "UmbracoBackOfficeReadyDemo",       // This client has already been registered. You may register more via https://members.readysignon.com
-                    Caption = "Ready for Umbraco Backoffice",
+                    Caption = "ReadyConnect",                // Text used for displaying this sign-in option on the login page.
                     ResponseType = "code id_token token",    // This corresponds to the Hybrid Flow outlined in oidc core spec 1.0.
                     Scope = "openid profile application.profile rso_idp rso_rid",   // When rso_rid is absent, rso_idp is used.
                     SignInAsAuthenticationType = Umbraco.Core.Constants.Security.BackOfficeExternalAuthenticationType,
@@ -160,7 +160,6 @@ namespace UmbracoReady
 
             // Configure BackOffice Account Link button and style
             identityOptions.ForUmbracoBackOffice("btn-openid", "fa-openid");    // More are avail at: https://fontawesome.com/
-            identityOptions.Caption = "ReadyConnect";                           // Or any other name you like.
 
             // Give this middleware a unique type name
             identityOptions.AuthenticationType = "readyconnectsvc_for_umbraco_bo";
@@ -194,7 +193,7 @@ namespace UmbracoReady
                 = new OpenIdConnectAuthenticationOptions
                 {
                     ClientId = "UmbracoFrontEndReadyDemo",       // This client has already been registered. You may register more via https://members.readysignon.com
-                    Caption = "Ready for Umbraco Front-End",
+                    Caption = "ReadyConnect",                // Text used for displaying this sign-in option on the login page.
                     ResponseType = "code id_token token",    // This corresponds to the Hybrid Flow outlined in oidc core spec 1.0.
                     Scope = "openid profile application.profile rso_idp rso_rid",   // When rso_rid is absent, rso_idp is used.
                     SignInAsAuthenticationType = DefaultAuthenticationTypes.ExternalCookie,
