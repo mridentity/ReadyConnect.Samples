@@ -153,7 +153,7 @@ namespace UmbracoReady
                     ResponseType = "code id_token token",    // This corresponds to the Hybrid Flow outlined in oidc core spec 1.0.
                     Scope = "openid profile application.profile rso_idp rso_rid",   // When rso_rid is absent, rso_idp is used.
                     SignInAsAuthenticationType = Umbraco.Core.Constants.Security.BackOfficeExternalAuthenticationType,
-                    Authority = "https://localhost:44362/",
+                    Authority = "https://members.readysignon.com/",
                     RedirectUri = "http://localhost:5198/Umbraco",      // This cannot be change unless you use a different client registration created at https://members.readysignon.com
                     PostLogoutRedirectUri = "http://localhost:5198/Umbraco",
                 };
@@ -162,7 +162,7 @@ namespace UmbracoReady
             identityOptions.ForUmbracoBackOffice("btn-openid", "fa-openid");    // More are avail at: https://fontawesome.com/
 
             // Give this middleware a unique type name
-            identityOptions.AuthenticationType = "readyconnectsvc_for_umbraco_bo";
+            identityOptions.AuthenticationType = identityOptions.Authority;   // For some reason this is required to be the same as the authority.
 
             ConfigureIdentityCreationAndCustomHandlers(app, identityOptions);
         }
@@ -197,7 +197,7 @@ namespace UmbracoReady
                     ResponseType = "code id_token token",    // This corresponds to the Hybrid Flow outlined in oidc core spec 1.0.
                     Scope = "openid profile application.profile rso_idp rso_rid",   // When rso_rid is absent, rso_idp is used.
                     SignInAsAuthenticationType = DefaultAuthenticationTypes.ExternalCookie,
-                    Authority = "https://localhost:44362/",
+                    Authority = "https://members.readysignon.com/",
                     RedirectUri = "http://localhost:5198",      // This cannot be change unless you use a different client registration created at https://members.readysignon.com
                     PostLogoutRedirectUri = "http://localhost:5198",
                 };
