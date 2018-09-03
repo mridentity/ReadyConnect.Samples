@@ -18,6 +18,7 @@ using Umbraco.Core.Security;
 using Microsoft.Owin.Security.OpenIdConnect;
 using UmbracoReady.App_Start;
 using System.Threading.Tasks;
+using System.Configuration;
 
 [assembly: OwinStartup("UmbracoIdentityStartup", typeof(UmbracoIdentityStartup))]
 
@@ -154,8 +155,8 @@ namespace UmbracoReady
                     Scope = "openid profile application.profile rso_idp rso_rid",   // When rso_rid is absent, rso_idp is used.
                     SignInAsAuthenticationType = Umbraco.Core.Constants.Security.BackOfficeExternalAuthenticationType,
                     Authority = "https://members.readysignon.com/",
-                    RedirectUri = "http://localhost:5198/Umbraco",      // This cannot be change unless you use a different client registration created at https://members.readysignon.com
-                    PostLogoutRedirectUri = "http://localhost:5198/Umbraco",
+                    RedirectUri = Properties.Settings.Default.MAIN_SITE_BASE_URL + "/Umbraco",      // This cannot be change unless you use a different client registration created at https://members.readysignon.com
+                    PostLogoutRedirectUri = Properties.Settings.Default.MAIN_SITE_BASE_URL + "/Umbraco"
                 };
 
             // Configure BackOffice Account Link button and style
@@ -198,8 +199,8 @@ namespace UmbracoReady
                     Scope = "openid profile application.profile rso_idp rso_rid",   // When rso_rid is absent, rso_idp is used.
                     SignInAsAuthenticationType = DefaultAuthenticationTypes.ExternalCookie,
                     Authority = "https://members.readysignon.com/",
-                    RedirectUri = "http://localhost:5198",      // This cannot be change unless you use a different client registration created at https://members.readysignon.com
-                    PostLogoutRedirectUri = "http://localhost:5198",
+                    RedirectUri = Properties.Settings.Default.MAIN_SITE_BASE_URL,      // This shouldn't be changed if you're running this code locally unless you want to register your own client application at https://members.readysignon.com
+                    PostLogoutRedirectUri = Properties.Settings.Default.MAIN_SITE_BASE_URL
                 };
 
             // Give this middleware a unique type name
