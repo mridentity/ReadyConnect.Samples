@@ -1,30 +1,26 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using UmbracoIdentity;
-using UmbracoReady.Models.UmbracoIdentity;
-using UmbracoReady;
+using Microsoft.Owin.Security.OpenIdConnect;
 using Owin;
-using Umbraco.Web;
-using Umbraco.Web.Security.Identity;
-using UmbracoIdentity.Models;
+using System;
+using System.Configuration;
+using System.Threading.Tasks;
 using Umbraco.Core;
 using Umbraco.Core.Security;
-using Microsoft.Owin.Security.OpenIdConnect;
+using Umbraco.Web;
+using Umbraco.Web.Security.Identity;
+using UmbracoIdentity;
+using UmbracoReady;
 using UmbracoReady.App_Start;
-using System.Threading.Tasks;
-using System.Configuration;
+using UmbracoReady.Models.UmbracoIdentity;
 
 [assembly: OwinStartup("UmbracoIdentityStartup", typeof(UmbracoIdentityStartup))]
 
 namespace UmbracoReady
 {
-   
+
     /// <summary>
     /// OWIN Startup class for UmbracoIdentity 
     /// </summary>
@@ -149,14 +145,14 @@ namespace UmbracoReady
             var identityOptions
                 = new OpenIdConnectAuthenticationOptions
                 {
-                    ClientId = "UmbracoBackOfficeReadyDemo",       // This client has already been registered. You may register more via https://members.readysignon.com
+                    ClientId = "UmbracoReadyDemoBackOffice",       // This client has already been registered. You may register more via https://members.readysignon.com
                     Caption = "ReadyConnect",                // Text used for displaying this sign-in option on the login page.
                     ResponseType = "code id_token token",    // This corresponds to the Hybrid Flow outlined in oidc core spec 1.0.
                     Scope = "openid profile application.profile rso_idp rso_rid",   // When rso_rid is absent, rso_idp is used.
                     SignInAsAuthenticationType = Umbraco.Core.Constants.Security.BackOfficeExternalAuthenticationType,
                     Authority = "https://members.readysignon.com/",
-                    RedirectUri = Properties.Settings.Default.MAIN_SITE_BASE_URL + "/Umbraco",      // This cannot be change unless you use a different client registration created at https://members.readysignon.com
-                    PostLogoutRedirectUri = Properties.Settings.Default.MAIN_SITE_BASE_URL + "/Umbraco"
+                    RedirectUri = ConfigurationManager.AppSettings["MAIN_SITE_BASE_URL"] + "/Umbraco",      // This cannot be change unless you use a different client registration created at https://members.readysignon.com
+                    PostLogoutRedirectUri = ConfigurationManager.AppSettings["MAIN_SITE_BASE_URL"] + "/Umbraco",
                 };
 
             // Configure BackOffice Account Link button and style
@@ -193,14 +189,14 @@ namespace UmbracoReady
             var identityOptions
                 = new OpenIdConnectAuthenticationOptions
                 {
-                    ClientId = "UmbracoFrontEndReadyDemo",       // This client has already been registered. You may register more via https://members.readysignon.com
+                    ClientId = "UmbracoReadyDemoFrontEnd",       // This client has already been registered. You may register more via https://members.readysignon.com
                     Caption = "ReadyConnect",                // Text used for displaying this sign-in option on the login page.
                     ResponseType = "code id_token token",    // This corresponds to the Hybrid Flow outlined in oidc core spec 1.0.
                     Scope = "openid profile application.profile rso_idp rso_rid",   // When rso_rid is absent, rso_idp is used.
                     SignInAsAuthenticationType = DefaultAuthenticationTypes.ExternalCookie,
                     Authority = "https://members.readysignon.com/",
-                    RedirectUri = Properties.Settings.Default.MAIN_SITE_BASE_URL,      // This shouldn't be changed if you're running this code locally unless you want to register your own client application at https://members.readysignon.com
-                    PostLogoutRedirectUri = Properties.Settings.Default.MAIN_SITE_BASE_URL
+                    RedirectUri = ConfigurationManager.AppSettings["MAIN_SITE_BASE_URL"],      // This shouldn't be changed if you're running this code locally unless you want to register your own client application at https://members.readysignon.com
+                    PostLogoutRedirectUri = ConfigurationManager.AppSettings["MAIN_SITE_BASE_URL"]
                 };
 
             // Give this middleware a unique type name
