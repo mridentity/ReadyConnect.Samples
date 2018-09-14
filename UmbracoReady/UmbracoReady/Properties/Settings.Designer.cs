@@ -22,14 +22,5 @@ namespace UmbracoReady.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:5198")]
-        public string MAIN_SITE_BASE_URL {
-            get {
-                return ((string)(this["MAIN_SITE_BASE_URL"]));
-            }
-        }
     }
 }

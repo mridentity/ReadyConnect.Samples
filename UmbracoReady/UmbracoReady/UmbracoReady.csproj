@@ -128,6 +128,9 @@
     <Reference Include="Microsoft.IdentityModel.Logging, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.Logging.5.2.4\lib\net451\Microsoft.IdentityModel.Logging.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.IdentityModel.Protocol.Extensions, Version=1.0.40306.1554, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Protocol.Extensions.1.0.4.403061554\lib\net45\Microsoft.IdentityModel.Protocol.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.IdentityModel.Protocols, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.Protocols.5.2.4\lib\net451\Microsoft.IdentityModel.Protocols.dll</HintPath>
     </Reference>
@@ -215,6 +218,7 @@
     <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
       <Private>True</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.IO.Compression, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.Compression.4.3.0\lib\net46\System.IO.Compression.dll</HintPath>
@@ -262,6 +266,7 @@
     <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
       <Private>True</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Extensions, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.Extensions.4.3.0\lib\net462\System.Runtime.Extensions.dll</HintPath>
@@ -282,9 +287,11 @@
     <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
       <Private>True</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>True</Private>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -441,6 +448,7 @@
   <ItemGroup>
     <Compile Include="App_Start\ClaimsTransformer.cs" />
     <Compile Include="App_Start\UmbracoAuthTokenServerExtensions.cs" />
+    <Compile Include="App_Start\UmbracoCustomOwinStartup.cs" />
     <Compile Include="App_Start\UmbracoIdentityStartup.cs" />
     <Compile Include="App_Start\UmbracoStandardOwinStartup.cs" />
     <Compile Include="Controllers\UmbracoIdentityAccountController.cs" />
@@ -465,11 +473,18 @@
     <Content Include="config\imageprocessor\security.config" />
     <Content Include="config\imageprocessor\processing.config" />
     <Content Include="config\imageprocessor\cache.config" />
-    <Content Include="App_Plugins\ModelsBuilder\package.manifest" />
-    <Content Include="Media\Web.config" />
     <Content Include="config\umbracoSettings.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="config\ClientDependency.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\UmbracoIdentityAccount\ExternalLoginsList.cshtml" />
+    <Content Include="App_Plugins\ModelsBuilder\package.manifest" />
+    <Content Include="Media\Web.config" />
     <Content Include="config\trees.config" />
     <Content Include="config\tinyMceConfig.config" />
     <Content Include="config\scripting.config" />
@@ -482,35 +497,13 @@
     <Content Include="config\ExamineIndex.config" />
     <Content Include="config\EmbeddedMedia.config" />
     <Content Include="config\Dashboard.config" />
-    <Content Include="config\ClientDependency.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="config\BaseRestExtensions.config" />
     <Content Include="config\BackOfficeTours\getting-started.json" />
     <Content Include="config\applications.config" />
     <Content Include="config\404handlers.config" />
-    <None Include="packages.config" />
-    <Content Include="Views\Web.config">
+    <None Include="packages.config">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Views\UmbracoIdentityAccount\_ViewStart.cshtml" />
-    <Content Include="Views\UmbracoIdentityAccount\ShowRoles.cshtml" />
-    <Content Include="Views\UmbracoIdentityAccount\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\UmbracoIdentityAccount\ResetPassword.cshtml" />
-    <Content Include="Views\UmbracoIdentityAccount\RemoveAccountList.cshtml" />
-    <Content Include="Views\UmbracoIdentityAccount\Register.cshtml" />
-    <Content Include="Views\UmbracoIdentityAccount\Profile.cshtml" />
-    <Content Include="Views\UmbracoIdentityAccount\ManagePassword.cshtml" />
-    <Content Include="Views\UmbracoIdentityAccount\Manage.cshtml" />
-    <Content Include="Views\UmbracoIdentityAccount\LoginStatus.cshtml" />
-    <Content Include="Views\UmbracoIdentityAccount\Login.cshtml" />
-    <Content Include="Views\UmbracoIdentityAccount\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\UmbracoIdentityAccount\ForgotPassword.cshtml" />
-    <Content Include="Views\UmbracoIdentityAccount\ExternalLoginsList.cshtml" />
-    <Content Include="Views\UmbracoIdentityAccount\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\UmbracoIdentityAccount\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\AccountLayout.cshtml" />
-    <Content Include="Views\Account.cshtml" />
+    </None>
     <None Include="Properties\PublishProfiles\UmbracoReady - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\UmbracoReady - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
@@ -527,6 +520,23 @@
     <Content Include="Views\Partials\Grid\Bootstrap3-Fluid.cshtml" />
     <Content Include="Views\Partials\Grid\Bootstrap2.cshtml" />
     <Content Include="Views\Partials\Grid\Bootstrap2-Fluid.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\_ViewStart.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\ShowRoles.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\ResetPassword.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\RemoveAccountList.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\Register.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\Profile.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\ManagePassword.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\Manage.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\LoginStatus.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\Login.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\ForgotPassword.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\UmbracoIdentityAccount\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\AccountLayout.cshtml" />
+    <Content Include="Views\Account.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
