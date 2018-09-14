@@ -145,10 +145,10 @@ namespace UmbracoReady
             var identityOptions
                 = new OpenIdConnectAuthenticationOptions
                 {
-                    ClientId = "UmbracoReadyDemoBackOffice",       // This client has already been registered. You may register more via https://members.readysignon.com
-                    Caption = "ReadyConnect",                // Text used for displaying this sign-in option on the login page.
+                    ClientId = ConfigurationManager.AppSettings["BO_READYCONNECT_CLIENT_ID"],       // This client has already been registered. You may register more via https://members.readysignon.com
+                    Caption = ConfigurationManager.AppSettings["BO_READYCONNECT_CLIENT_CAPTION"],                // Text used for displaying this sign-in option on the login page.
                     ResponseType = "code id_token token",    // This corresponds to the Hybrid Flow outlined in oidc core spec 1.0.
-                    Scope = "openid profile application.profile rso_idp rso_rid",   // When rso_rid is absent, rso_idp is used.
+                    Scope = ConfigurationManager.AppSettings["BO_READYCONNECT_SCOPES"],   // When rso_rid is absent, rso_idp is used.
                     SignInAsAuthenticationType = Umbraco.Core.Constants.Security.BackOfficeExternalAuthenticationType,
                     Authority = "https://members.readysignon.com/",
                     RedirectUri = ConfigurationManager.AppSettings["MAIN_SITE_BASE_URL"] + "/Umbraco",      // This cannot be change unless you use a different client registration created at https://members.readysignon.com
@@ -161,7 +161,7 @@ namespace UmbracoReady
             // Give this middleware a unique type name
             identityOptions.AuthenticationType = identityOptions.Authority;   // For some reason this is required to be the same as the authority.
 
-            ConfigureIdentityCreationAndCustomHandlers(app, identityOptions);
+            ConfigureIdentityCreationAndCustomHandlers(app, identityOptions, autoLinkExternalAccount: false);
         }
 
         private static void ConfigureOpenIdForFrontEnd(IAppBuilder app)
@@ -189,10 +189,10 @@ namespace UmbracoReady
             var identityOptions
                 = new OpenIdConnectAuthenticationOptions
                 {
-                    ClientId = "UmbracoReadyDemoFrontEnd",       // This client has already been registered. You may register more via https://members.readysignon.com
-                    Caption = "ReadyConnect",                // Text used for displaying this sign-in option on the login page.
+                    ClientId = ConfigurationManager.AppSettings["FE_READYCONNECT_CLIENT_ID"],       // This client has already been registered. You may register more via https://members.readysignon.com
+                    Caption = ConfigurationManager.AppSettings["FE_READYCONNECT_CLIENT_CAPTION"],                // Text used for displaying this sign-in option on the login page.
                     ResponseType = "code id_token token",    // This corresponds to the Hybrid Flow outlined in oidc core spec 1.0.
-                    Scope = "openid profile application.profile rso_idp rso_rid",   // When rso_rid is absent, rso_idp is used.
+                    Scope = ConfigurationManager.AppSettings["FE_READYCONNECT_SCOPES"],   // When rso_rid is absent, rso_idp is used.
                     SignInAsAuthenticationType = DefaultAuthenticationTypes.ExternalCookie,
                     Authority = "https://members.readysignon.com/",
                     RedirectUri = ConfigurationManager.AppSettings["MAIN_SITE_BASE_URL"],      // This shouldn't be changed if you're running this code locally unless you want to register your own client application at https://members.readysignon.com
@@ -202,16 +202,16 @@ namespace UmbracoReady
             // Give this middleware a unique type name
             identityOptions.AuthenticationType = "readyconnectsvc_for_umbraco_fe";
 
-            ConfigureIdentityCreationAndCustomHandlers(app, identityOptions);
+            ConfigureIdentityCreationAndCustomHandlers(app, identityOptions, autoLinkExternalAccount: true);
         }
 
-        private static void ConfigureIdentityCreationAndCustomHandlers(IAppBuilder app, OpenIdConnectAuthenticationOptions identityOptions)
+        private static void ConfigureIdentityCreationAndCustomHandlers(IAppBuilder app, OpenIdConnectAuthenticationOptions identityOptions, bool autoLinkExternalAccount = false)
         {
             // Configure AutoLinking, which allows Umbraco to automatically add a first-time
             // visitor to its database without prompting the user.
             identityOptions.SetExternalSignInAutoLinkOptions
                 (
-                    new ExternalSignInAutoLinkOptions(autoLinkExternalAccount: true,
+                    new ExternalSignInAutoLinkOptions(autoLinkExternalAccount: autoLinkExternalAccount,
                                                         defaultUserGroups: null,
                                                         defaultCulture: null)
                 );
